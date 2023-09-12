@@ -14,7 +14,7 @@ module.exports.handleLogin = (req, res) => {
 
 module.exports.LoginAttempt = async (req, res) => {
   const checkUserExists = await pool.query(
-    "SELECT id,username,passhash FROM users u WHERE u.username=$1",
+    "SELECT id,username,passhash,userid FROM users u WHERE u.username=$1",
     [req.body.username]
   );
 

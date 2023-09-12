@@ -10,8 +10,8 @@ module.exports.authorizeUser = (socket, next) => {
   }
 };
 
-//Copy session info into socket.user
 module.exports.initializeUser = async (socket) => {
+  //Copy session info into socket.user
   socket.user = { ...socket.request.session.user };
   // Set friends
   await redisClient.hset(
