@@ -13,15 +13,25 @@ module.exports.authorizeUser = (socket, next) => {
 //Copy session info into socket.user
 module.exports.initializeUser = async (socket) => {
   socket.user = { ...socket.request.session.user };
-  redisClient.hset(
+  // Set friends
+  await redisClient.hset(
     `userid:${socket.user.username}`,
     "userid",
     socket.user.userid
   );
 
+  //Get friends list
+  const friendList = await redisClient.lrange(
+    `friends:${socket.user.username}`,
+    0,
+    -1
+  );
+  console.log("friendslist", friendList);
+  socket.emit("friends", friendList);
+
+  //Logging
   console.log("USERID: ", socket.user.userid);
-  console.log(socket.id);
-  console.log(socket.user.username);
+  console.log("Current username", socket.user.username);
 };
 
 module.exports.addFriend = async (socket, friendName, cb) => {
