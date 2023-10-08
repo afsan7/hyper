@@ -38,7 +38,7 @@ const Sidebar = () => {
                 w="10px"
                 h="10px"
               ></Circle>
-              <Text>{friend}</Text>
+              <Text>{friend.username}</Text>
             </HStack>
           ))}
         </VStack>

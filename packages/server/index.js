@@ -14,7 +14,9 @@ const {
   authorizeUser,
   initializeUser,
   addFriend,
+  onDisconnect,
 } = require("./controllers/socketController");
+
 require("dotenv").config();
 
 const io = new Server(server, {
@@ -35,6 +37,10 @@ io.on("connect", (socket) => {
 
   socket.on("add_friend", (friendName, cb) => {
     addFriend(socket, friendName, cb);
+  });
+
+  socket.on("disconnect", () => {
+    onDisconnect(socket)
   });
 });
 
